@@ -10,6 +10,7 @@ import Chatbot from '@/components/Chatbot';
 import Modal from '@/components/Modal';
 
 import { translations } from '@/translations';
+import { getUsersFromDB, saveUsersToDB } from '@/lib/db';
 
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -21,13 +22,36 @@ const App: React.FC = () => {
   const [modal, setModal] = useState<{ isOpen: boolean; title: string; message: string }>({ isOpen: false, title: '', message: '' });
 
   useEffect(() => {
-    const saved = localStorage.getItem('zb_users_final');
-    if (saved) setUsers(JSON.parse(saved));
+    const loadData = async () => {
+      try {
+        const saved = await getUsersFromDB();
+        if (saved && saved.length > 0) {
+          setUsers(saved);
+        } else {
+          // Fallback to localStorage for migration
+          const legacy = localStorage.getItem('zb_users_final');
+          if (legacy) {
+            const parsed = JSON.parse(legacy);
+            setUsers(parsed);
+            await saveUsersToDB(parsed);
+            localStorage.removeItem('zb_users_final');
+          }
+        }
+      } catch (e) {
+        console.error('Failed to load users from DB', e);
+      }
+    };
+    loadData();
   }, []);
 
-  const saveUsers = (newUsers: User[]) => {
+  const saveUsers = async (newUsers: User[]) => {
     setUsers(newUsers);
-    localStorage.setItem('zb_users_final', JSON.stringify(newUsers));
+    try {
+      await saveUsersToDB(newUsers);
+    } catch (e) {
+      console.error('Failed to save users to DB', e);
+      showAlert('Storage Error', 'Failed to save your projects. Your browser storage might be full.');
+    }
   };
 
   const showAlert = (title: string, message: string) => {
