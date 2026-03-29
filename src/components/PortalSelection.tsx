@@ -1,11 +1,11 @@
 
 import React from 'react';
-import { AppLanguage } from '@/types';
-import { translations } from '@/translations';
+import { AppLanguage } from '../types';
+import { translations } from '../translations';
 
 interface PortalSelectionProps {
   language: AppLanguage;
-  onSelect: (portal: 'admin' | 'user') => void;
+  onSelect: (portal: 'admin' | 'user' | 'demo') => void;
 }
 
 const PortalSelection: React.FC<PortalSelectionProps> = ({ language, onSelect }) => {
@@ -50,6 +50,17 @@ const PortalSelection: React.FC<PortalSelectionProps> = ({ language, onSelect })
           <div className="mt-10 flex items-center gap-4 text-blue-500 font-black text-xs uppercase tracking-widest">
             {t.enterPortal} <i className="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
           </div>
+        </button>
+
+        <button 
+          onClick={() => onSelect('demo')}
+          className="md:col-span-2 group bg-green-600 p-8 rounded-[40px] shadow-2xl hover:scale-[1.01] transition-all text-center relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-24 h-24 bg-green-500 rounded-bl-[80px] group-hover:bg-white transition-colors flex items-center justify-center">
+            <i className="fas fa-play text-2xl text-white group-hover:text-green-600 transition-colors"></i>
+          </div>
+          <h3 className="text-3xl font-black text-white tracking-tighter mb-2 uppercase">{t.demoMode}</h3>
+          <p className="text-green-100 font-medium leading-relaxed max-w-2xl mx-auto">{t.demoModeDesc}</p>
         </button>
       </div>
     </div>

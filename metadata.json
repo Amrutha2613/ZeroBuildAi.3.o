@@ -1,5 +1,5 @@
 {
-  "name": "Remix: Remix: Zero-Build AI",
+  "name": "Zero-Build AI",
   "description": "Smart building visualization platform for designing and visualizing architectural projects with AI-powered image generation and a voice-enabled assistant.",
   "requestFramePermissions": [
     "microphone"

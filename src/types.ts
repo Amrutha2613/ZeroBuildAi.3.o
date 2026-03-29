@@ -52,7 +52,13 @@ export interface RoomConfig {
   };
 }
 
-export type FeedbackLevel = 'Average' | 'Good' | 'Very Good' | 'Excellent' | 'Outstanding';
+export enum FeedbackLevel {
+  AVERAGE = 'Average',
+  GOOD = 'Good',
+  VERY_GOOD = 'Very Good',
+  EXCELLENT = 'Excellent',
+  OUTSTANDING = 'Outstanding'
+}
 
 export interface Project {
   id: string;

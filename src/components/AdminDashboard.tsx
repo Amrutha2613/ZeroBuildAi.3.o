@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
-import { User, UserRole, Project, AppLanguage } from '@/types';
+import { User, UserRole, Project, AppLanguage, FeedbackLevel } from '../types';
 import Modal from './Modal';
-import { translations } from '@/translations';
+import { translations } from '../translations';
 
 interface AdminDashboardProps {
   users: User[];
@@ -56,13 +56,13 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ users, language, onDele
     });
   };
 
-  const getFeedbackBadgeColor = (feedback?: string) => {
+  const getFeedbackBadgeColor = (feedback?: FeedbackLevel) => {
     switch(feedback) {
-      case 'Outstanding': return 'bg-purple-600 text-white shadow-purple-100';
-      case 'Excellent': return 'bg-green-600 text-white shadow-green-100';
-      case 'Very Good': return 'bg-blue-600 text-white shadow-blue-100';
-      case 'Good': return 'bg-teal-500 text-white shadow-teal-100';
-      case 'Average': return 'bg-orange-500 text-white shadow-orange-100';
+      case FeedbackLevel.OUTSTANDING: return 'bg-purple-600 text-white shadow-purple-100';
+      case FeedbackLevel.EXCELLENT: return 'bg-green-600 text-white shadow-green-100';
+      case FeedbackLevel.VERY_GOOD: return 'bg-blue-600 text-white shadow-blue-100';
+      case FeedbackLevel.GOOD: return 'bg-teal-500 text-white shadow-teal-100';
+      case FeedbackLevel.AVERAGE: return 'bg-orange-500 text-white shadow-orange-100';
       default: return 'bg-gray-200 text-gray-500';
     }
   };

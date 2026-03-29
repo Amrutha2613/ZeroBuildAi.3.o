@@ -1,16 +1,15 @@
 
 import React, { useState, useEffect } from 'react';
-import { User, UserRole, Project, AppLanguage, FeedbackLevel } from '@/types';
-import UserLogin from '@/components/UserLogin';
-import AdminLogin from '@/components/AdminLogin';
-import PortalSelection from '@/components/PortalSelection';
-import ClientDashboard from '@/components/ClientDashboard';
-import AdminDashboard from '@/components/AdminDashboard';
-import Chatbot from '@/components/Chatbot';
-import Modal from '@/components/Modal';
+import { User, UserRole, Project, AppLanguage, FeedbackLevel } from './types';
+import UserLogin from './components/UserLogin';
+import AdminLogin from './components/AdminLogin';
+import PortalSelection from './components/PortalSelection';
+import ClientDashboard from './components/ClientDashboard';
+import AdminDashboard from './components/AdminDashboard';
+import Chatbot from './components/Chatbot';
+import Modal from './components/Modal';
 
-import { translations } from '@/translations';
-import { getUsersFromDB, saveUsersToDB } from '@/lib/db';
+import { translations } from './translations';
 
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -18,44 +17,72 @@ const App: React.FC = () => {
   const [language, setLanguage] = useState<AppLanguage>(AppLanguage.EN);
   const t = translations[language];
   const [showChat, setShowChat] = useState(false);
-  const [portalView, setPortalView] = useState<'selection' | 'admin' | 'user'>('selection');
+  const [portalView, setPortalView] = useState<'selection' | 'admin' | 'user' | 'demo'>('selection');
   const [modal, setModal] = useState<{ isOpen: boolean; title: string; message: string }>({ isOpen: false, title: '', message: '' });
 
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        const saved = await getUsersFromDB();
-        if (saved && saved.length > 0) {
-          setUsers(saved);
-        } else {
-          // Fallback to localStorage for migration
-          const legacy = localStorage.getItem('zb_users_final');
-          if (legacy) {
-            const parsed = JSON.parse(legacy);
-            setUsers(parsed);
-            await saveUsersToDB(parsed);
-            localStorage.removeItem('zb_users_final');
-          }
-        }
-      } catch (e) {
-        console.error('Failed to load users from DB', e);
-      }
-    };
-    loadData();
+    const saved = localStorage.getItem('zb_users_final');
+    if (saved) setUsers(JSON.parse(saved));
   }, []);
 
-  const saveUsers = async (newUsers: User[]) => {
+  const saveUsers = (newUsers: User[]) => {
     setUsers(newUsers);
-    try {
-      await saveUsersToDB(newUsers);
-    } catch (e) {
-      console.error('Failed to save users to DB', e);
-      showAlert('Storage Error', 'Failed to save your projects. Your browser storage might be full.');
-    }
+    localStorage.setItem('zb_users_final', JSON.stringify(newUsers));
   };
 
   const showAlert = (title: string, message: string) => {
     setModal({ isOpen: true, title, message });
+  };
+
+  const handleDemoLogin = () => {
+    const demoUser: User = {
+      id: 'demo-user',
+      email: 'demo@zerobuild.ai',
+      role: UserRole.CLIENT,
+      projects: [
+        {
+          id: 'p1',
+          name: 'Modern Eco-Villa',
+          description: 'A sustainable luxury villa featuring solar integration, rainwater harvesting, and smart home automation.',
+          budget: 2.5,
+          area: 3500,
+          location: 'Hyderabad, TS',
+          style: 'Modern',
+          rooms: [
+            { name: 'Living Room', color: '#f3f4f6' },
+            { name: 'Master Suite', color: '#e5e7eb' },
+            { name: 'Modular Kitchen', color: '#d1d5db' },
+            { name: 'Home Office', color: '#9ca3af' }
+          ],
+          floors: 2,
+          materials: ['Glass', 'Concrete', 'Recycled Steel', 'Bamboo'],
+          timeline: '12 months',
+          feedback: FeedbackLevel.VERY_GOOD,
+          createdAt: Date.now() - 86400000 * 5
+        },
+        {
+          id: 'p2',
+          name: 'Contemporary Office Space',
+          description: 'Open-plan commercial office with collaborative zones and ergonomic design.',
+          budget: 1.2,
+          area: 2000,
+          location: 'Bangalore, KA',
+          style: 'Contemporary',
+          rooms: [
+            { name: 'Main Hall', color: '#ffffff' },
+            { name: 'Conference Room', color: '#f9fafb' }
+          ],
+          floors: 1,
+          materials: ['Acoustic Panels', 'LED Lighting', 'Polished Concrete'],
+          timeline: '6 months',
+          feedback: FeedbackLevel.GOOD,
+          createdAt: Date.now() - 86400000 * 10
+        }
+      ],
+      createdAt: Date.now() - 86400000 * 30,
+      lastLogin: Date.now()
+    };
+    setUser(demoUser);
   };
 
   const handleLogin = (email: string, pass: string, role: UserRole, isSignUp: boolean) => {
@@ -122,7 +149,13 @@ const App: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-gray-50/50">
       {!user ? (
         <>
-          {portalView === 'selection' && <PortalSelection language={language} onSelect={setPortalView} />}
+          {portalView === 'selection' && <PortalSelection language={language} onSelect={(v) => {
+            if (v === 'demo') {
+              handleDemoLogin();
+            } else {
+              setPortalView(v);
+            }
+          }} />}
           {portalView === 'admin' && <AdminLogin language={language} onLogin={handleLogin} onBack={() => setPortalView('selection')} />}
           {portalView === 'user' && <UserLogin language={language} onLogin={handleLogin} onBack={() => setPortalView('selection')} />}
         </>

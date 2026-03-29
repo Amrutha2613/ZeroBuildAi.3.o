@@ -1,4 +1,4 @@
-import { AppLanguage } from '@/types';
+import { AppLanguage } from './types';
 
 export const translations: Record<AppLanguage, any> = {
   [AppLanguage.EN]: {
@@ -8,6 +8,8 @@ export const translations: Record<AppLanguage, any> = {
     clientPortalDesc: "Design your dream building, visualize rooms, and get AI-powered budget analysis.",
     adminPortal: "Developer Portal",
     adminPortalDesc: "Monitor client entries, analyze building trends, and manage architectural data.",
+    demoMode: "Demo Mode",
+    demoModeDesc: "Explore the platform instantly with pre-configured sample data.",
     enterPortal: "Enter Portal",
     back: "Back",
     clientLogin: "Client Login",
@@ -223,6 +225,8 @@ export const translations: Record<AppLanguage, any> = {
     clientPortalDesc: "మీ కలల భవనాన్ని రూపొందించండి, గదులను ఊహించుకోండి మరియు AI-ఆధారిత బడ్జెట్ విశ్లేషణను పొందండి.",
     adminPortal: "డెవలపర్ పోర్టల్",
     adminPortalDesc: "క్లయింట్ ఎంట్రీలను పర్యవేక్షించండి, భవన పోకడలను విశ్లేషించండి మరియు నిర్మాణ డేటాను నిర్వహించండి.",
+    demoMode: "డెమో మోడ్",
+    demoModeDesc: "ముందుగా కాన్ఫిగర్ చేసిన నమూనా డేటాతో ప్లాట్‌ఫారమ్‌ను తక్షణమే అన్వేషించండి.",
     enterPortal: "పోర్టల్‌లోకి ప్రవేశించండి",
     back: "వెనుకకు",
     clientLogin: "క్లయింట్ లాగిన్",
@@ -438,6 +442,8 @@ export const translations: Record<AppLanguage, any> = {
     clientPortalDesc: "अपने सपनों की इमारत डिजाइन करें, कमरों की कल्पना करें और AI-संचालित बजट विश्लेषण प्राप्त करें।",
     adminPortal: "डेवलपर पोर्टल",
     adminPortalDesc: "क्लाइंट प्रविष्टियों की निगरानी करें, भवन रुझानों का विश्लेषण करें और वास्तुशिल्प डेटा प्रबंधित करें।",
+    demoMode: "डेमो मोड",
+    demoModeDesc: "पूर्व-कॉन्फ़िगर किए गए नमूना डेटा के साथ तुरंत प्लेटफ़ॉर्म का अन्वेषण करें।",
     enterPortal: "पोर्टल में प्रवेश करें",
     back: "पीछे",
     clientLogin: "क्लाइंट लॉगिन",

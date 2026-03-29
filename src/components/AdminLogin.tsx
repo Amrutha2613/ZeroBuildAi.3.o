@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { UserRole, AppLanguage } from '@/types';
-import { translations } from '@/translations';
+import { UserRole, AppLanguage } from '../types';
+import { translations } from '../translations';
 
 interface LoginProps {
   language: AppLanguage;

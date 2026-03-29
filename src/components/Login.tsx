@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { UserRole } from '@/types';
+import { UserRole } from '../types';
 
 interface LoginProps {
   onLogin: (email: string, password: string, role: UserRole, isSignUp: boolean) => void;

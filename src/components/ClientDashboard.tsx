@@ -1,11 +1,10 @@
 
 import React, { useState } from 'react';
-import { User, Project, RoomConfig, BuildingType, PlotDetails, AppLanguage, FeedbackLevel } from '@/types';
-import { BUILDING_TYPES, BUILDING_STYLES, COLOR_SHADES, LOCATION_TYPES } from '@/constants';
-import { generateMainBuildingImages, generateRoomVisuals, generateProjectSummary, extractFurnitureDetails } from '@/services/geminiService';
-// import Modal from './Modal';
-import Modal from '@/components/Modal';
-import { translations } from '@/translations';
+import { User, Project, RoomConfig, BuildingType, PlotDetails, AppLanguage, FeedbackLevel } from '../types';
+import { BUILDING_TYPES, BUILDING_STYLES, COLOR_SHADES, LOCATION_TYPES } from '../constants';
+import { generateMainBuildingImages, generateRoomVisuals, generateProjectSummary, extractFurnitureDetails } from '../services/geminiService';
+import Modal from './Modal';
+import { translations } from '../translations';
 
 interface ClientDashboardProps {
   user: User;
@@ -28,7 +27,13 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ user, language, onAdd
   const [rooms, setRooms] = useState<RoomConfig[]>([]);
   const [colors, setColors] = useState({ primary: '', shade: COLOR_SHADES[0] });
 
-  const FEEDBACK_OPTIONS: FeedbackLevel[] = ['Average', 'Good', 'Very Good', 'Excellent', 'Outstanding'];
+  const FEEDBACK_OPTIONS: FeedbackLevel[] = [
+    FeedbackLevel.AVERAGE,
+    FeedbackLevel.GOOD,
+    FeedbackLevel.VERY_GOOD,
+    FeedbackLevel.EXCELLENT,
+    FeedbackLevel.OUTSTANDING
+  ];
 
   const addRoom = () => {
     const newRoom: RoomConfig = {
