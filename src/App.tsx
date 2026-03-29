@@ -1,15 +1,15 @@
 
 import React, { useState, useEffect } from 'react';
-import { User, UserRole, Project, AppLanguage, FeedbackLevel } from './types';
-import UserLogin from './components/UserLogin';
-import AdminLogin from './components/AdminLogin';
-import PortalSelection from './components/PortalSelection';
-import ClientDashboard from './components/ClientDashboard';
-import AdminDashboard from './components/AdminDashboard';
-import Chatbot from './components/Chatbot';
-import Modal from './components/Modal';
+import { User, UserRole, Project, AppLanguage, FeedbackLevel } from '@/types';
+import UserLogin from '@/components/UserLogin';
+import AdminLogin from '@/components/AdminLogin';
+import PortalSelection from '@/components/PortalSelection';
+import ClientDashboard from '@/components/ClientDashboard';
+import AdminDashboard from '@/components/AdminDashboard';
+import Chatbot from '@/components/Chatbot';
+import Modal from '@/components/Modal';
 
-import { translations } from './translations';
+import { translations } from '@/translations';
 
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
