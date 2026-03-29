@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { User, Project, RoomConfig, BuildingType, PlotDetails, AppLanguage, FeedbackLevel } from '@/types';
 import { BUILDING_TYPES, BUILDING_STYLES, COLOR_SHADES, LOCATION_TYPES } from '@/constants';
 import { generateMainBuildingImages, generateRoomVisuals, generateProjectSummary, extractFurnitureDetails } from '@/services/geminiService';
-import Modal from './Modal';
+// import Modal from './Modal';
+import Modal from '@/components/Modal';
 import { translations } from '@/translations';
 
 interface ClientDashboardProps {
